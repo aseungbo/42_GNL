@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seuan <seuan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 14:55:24 by seuan             #+#    #+#             */
-/*   Updated: 2021/05/25 16:24:27 by seuan            ###   ########.fr       */
+/*   Created: 2021/05/25 14:56:15 by seuan             #+#    #+#             */
+/*   Updated: 2021/05/25 16:25:11 by seuan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -19,6 +19,10 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5000
+# endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 256
 # endif
 
 int			get_next_line(int fd, char **line);

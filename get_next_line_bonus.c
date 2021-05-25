@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seuan <seuan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 14:55:23 by seuan             #+#    #+#             */
-/*   Updated: 2021/05/25 16:57:20 by seuan            ###   ########.fr       */
+/*   Created: 2021/05/25 14:56:16 by seuan             #+#    #+#             */
+/*   Updated: 2021/05/25 16:24:59 by seuan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-int		split(char **backup, char **line, int nlidx)
+int			split(char **backup, char **line, int nlidx)
 {
-	char			*tmp;
+	char	*tmp;
 
 	(*backup)[nlidx] = '\0';
 	*line = ft_strdup(*backup);
@@ -24,16 +24,16 @@ int		split(char **backup, char **line, int nlidx)
 	return (1);
 }
 
-int		unsplit(char **backup, char **line)
+int			unsplit(char **backup, char **line)
 {
 	*line = *backup;
 	*backup = NULL;
 	return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
-	static char		*backup;
+	static char		*backup[OPEN_MAX];
 	char			buf[BUFFER_SIZE + 1];
 	int				size;
 	int				nlidx;
@@ -43,17 +43,17 @@ int		get_next_line(int fd, char **line)
 	while ((size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[size] = '\0';
-		backup = ft_strjoin(backup, buf);
-		nlidx = ft_strchr(backup, '\n');
+		backup[fd] = ft_strjoin(backup[fd], buf);
+		nlidx = ft_strchr(backup[fd], '\n');
 		if (nlidx >= 0)
-			return (split(&backup, line, nlidx));
+			return (split(&backup[fd], line, nlidx));
 	}
 	if (size < 0)
 		return (-1);
-	if (backup != NULL && (nlidx = ft_strchr(backup, '\n')) >= 0)
-		return (split(&backup, line, nlidx));
-	if (backup != NULL)
-		return (unsplit(&backup, line));
+	if (backup[fd] != NULL && (nlidx = ft_strchr(backup[fd], '\n')) >= 0)
+		return (split(&backup[fd], line, nlidx));
+	if (backup[fd] != NULL)
+		return (unsplit(&backup[fd], line));
 	*line = ft_strdup("");
 	return (0);
 }
